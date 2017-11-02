@@ -1,0 +1,277 @@
+{
+    "package": "Finbox",
+    "tagline": "Finbox API",
+    "description": "finbox.io is the best toolbox for researching stocks. We help you get answers fast, with unique data points and insights grounded in numbers.",
+    "image": "https:\/\/logo.clearbit.com\/finbox.io",
+    "repo": "https:\/\/github.com\/RapidSoftwareSolutions\/Marketplace-Finbox-Package",
+    "keywords": [
+        "API",
+        "finances",
+        "stock",
+        "analytics",
+        "finbox"
+    ],
+    "accounts": {
+        "domain": "finbox.io\/",
+        "credentials": [
+            "apiKey"
+        ]
+    },
+    "steps": [
+        "Browse to https:\/\/finbox.io\/",
+        "Register or log in",
+        "Browse to https:\/\/finbox.io\/profile\/api to get your apiKey"
+    ],
+    "blocks": [
+        {
+            "name": "listAvailableMetrics",
+            "description": "Returns a list of available metrics with associated metadata",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/metrics",
+                "method": "get",
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "listLatestFairValues",
+            "description": "Returns a summary of the latest finbox.io fair value computed for a company",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                },
+                {
+                    "name": "companyId",
+                    "type": "String",
+                    "info": "Company ticker or finbox id (e.g. AAPL or FINBOX:AAPL)",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/fairvalues\/{$data['companyId']}",
+                "method": "get",
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "listFairValueModels",
+            "description": "Returns a list of all valuation models used to derive the fair value summary for a company.",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                },
+                {
+                    "name": "companyId",
+                    "type": "String",
+                    "info": "Company ticker or finbox id (e.g. AAPL or FINBOX:AAPL)",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/fairvalues\/{$data['companyId']}\/models",
+                "method": "get",
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSingleDataForMetric",
+            "description": "Resolve a range of datapoints for a single company metric.",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                },
+                {
+                    "name": "companyId",
+                    "type": "String",
+                    "info": "Company ticker or finbox id (e.g. AAPL or FINBOX:AAPL)",
+                    "required": true
+                },
+                {
+                    "name": "metric",
+                    "type": "String",
+                    "info": "finbox.io metric id (e.g. total_revenue)",
+                    "required": true
+                },
+                {
+                    "name": "period",
+                    "type": "String",
+                    "info": "Period to get data for, e.g. FQ-7:FQ",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/data\/{$data['companyId']}\/{$data['metric']}",
+                "method": "get",
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "period"
+                        ]
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBatchDataForMetric",
+            "description": "Batch requests allow you to resolve up to 100 FinQL keys in a single API call. ",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                },
+                {
+                    "name": "data",
+                    "type": "JSON",
+                    "info": "Your batch request object",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/data\/batch",
+                "method": "post",
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "data"
+                        ]
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getUsageLimits",
+            "description": "Returns your current API usage and limits",
+            "args": [
+                {
+                    "name": "apiKey",
+                    "type": "credentials",
+                    "info": "Your API key",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.finbox.io\/beta\/data\/usage",
+                "method": "get",
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": []
+                    }
+                ],
+                "headers": {
+                    "Authorization": "Bearer {$data['apiKey']}"
+                }
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        }
+    ]
+}
