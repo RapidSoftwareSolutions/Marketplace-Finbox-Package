@@ -23,7 +23,7 @@ $app->post('/api/Finbox/getUsageLimits', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://api.finbox.io/beta/data/usage";
+    $query_str = "https://api.finbox.io/beta/usage";
 
     
 

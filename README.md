@@ -63,6 +63,22 @@ Batch requests allow you to resolve up to 100 FinQL keys in a single API call.
 | apiKey| credentials| Your API key
 | data  | JSON       | Your batch request object
 
+```
+Example of data object
+{
+"revenue": {
+      "lastYear": {
+        "FNBX": "FNBX.total_revenue[FY]",
+        "AAPL": "AAPL.total_revenue[FY]"
+      },
+      "nextYear": {
+        "FNBX": "FNBX.proj_revenue[FY+1]",
+        "AAPL": "AAPL.proj_revenue[FY+1]"
+      }
+  }
+  }
+  ```
+
 ## Finbox.getUsageLimits
 Returns your current API usage and limits
 
